@@ -1,0 +1,102 @@
+<html>
+  <head>
+    <title>Informe Labsur</title>
+    <style>
+      body, td {
+        font-family: Arial, sans-serif;
+        font-size: smaller;
+      }
+      big {
+        font-size: xx-large;
+        font-family: serif;
+      }
+      #header {
+        font-size: x-small;
+        width: 18em;
+        padding-bottom: 2em;
+      }
+      #logo {
+        width: auto;
+        background-color: silver;
+        text-align: center;
+      }
+      #metadata { width: 100% }
+      #metadata-left, #metadata-right  {
+        float: left;
+        width: 48%;
+      }
+      #metadata-left table, #metadata-right table { width: 100% }
+      #data {
+        text-align: center;
+        margin-bottom: 3em;
+      }
+      #signature {
+        border-top: solid 1px black;
+        text-align: center;
+        width: 15em;
+        float: left;
+        clear: both;
+        margin-left: 5em;
+        margin-top: 3em:
+      }
+      #sol-nr {
+        float: right;
+        padding-right: 2em;
+      }
+      .cell-table {
+        float: left;
+        border: solid 1px black;
+      }
+      .cell-table td {
+        text-align: right;
+        padding: 0 0.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <p id="sol-nr">
+      N&uacute;mero solicitud: $NUMEROSOLICITUD
+    </p>
+    <div id="header">
+      <div id="logo">
+         <big>LABSUR</big><br>
+         <small>Laboratorio Cl&iacute;nico Veterinario</small>
+      </div>
+      <div id="address">
+        Garc&iacute;a Hurtado 930<br>
+        643043<br>
+        Osorno
+      </div>
+    </div>
+    <div id="metadata">
+      <div id="metadata-left">
+        <table>
+          <tr> <td>Propietario:</td>     <td>$PROPIETARIO</td> </tr>
+          <tr> <td>Rut:</td>             <td>$RUT</td> </tr>
+          <tr> <td>Direcci&oacute;n:</td><td>$DIRECCION</td> </tr>
+          <tr> <td>Comuna:</td>          <td>$COMUNA</td> </tr>
+          <tr> <td>Solicitante:</td>     <td>$SOLICITANTE</td> </tr>
+          <tr> <td>Nro. examen:</td>     <td>$NUMEROEXAMEN</td> </tr>
+        </table>
+      </div>
+      <div id="metadata-right">
+        <table>
+          <tr> <td>Fecha Recepci&oacute;n:</td>   <td>$FECHARECEPCION</td> </tr>
+          <tr> <td>Fecha Informe:</td>            <td>$FECHAINFORME</td> </tr>
+          <tr> <td>Cantidad muestras:</td>        <td>$CANTMUESTRAS</td> </tr>
+          <tr> <td>T&eacute;cnica:</td>           <td>$TECNICA</td> </tr>
+          <tr> <td>Reactivo:</td>                 <td>$REACTIVO</td> </tr>
+          <tr> <td>C&oacute;digo examen:</td>     <td>$CODIGOEXAMEN</td> </tr>
+        </table>
+      </div>
+    </div>
+    <div id="data">
+      <p>C&eacute;lulas som&aacute;ticas</p>
+      $TABLA
+    </div>
+    <div id="signature">
+      $NOMBRE<br>$CARGO
+    </div>
+  </body>
+</html>
+
