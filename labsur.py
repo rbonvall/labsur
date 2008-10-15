@@ -150,7 +150,6 @@ class Application:
             self.list_store.append((i + 1,) + cow)
             self.data.append(cow)
         self.data_view.set_model(self.list_store)
-        self.window.resize(200, 400)
 
     def export(self, *args):
         if not self.data:
