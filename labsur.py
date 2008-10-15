@@ -92,21 +92,19 @@ class Application:
             'NOMBRE', 'CARGO']
         self.form.set_focus_chain([self.fields[key] for key in tab_order])
         self.form.show()
-        self.vbox.pack_start(self.form)
+        self.vbox.pack_start(self.form, expand=False)
 
-        self.data_box = gtk.HBox()
+        self.data_box = gtk.ScrolledWindow()
         self.data_box.show()
         self.vbox.pack_start(self.data_box, expand=True)
 
         self.data_view = gtk.TreeView()
-        self.data_box.pack_start(self.data_view, expand=True)
         self.data_view.show()
+        self.data_box.add(self.data_view)
 
         v = self.data_view.get_vadjustment()
-        self.sb = gtk.VScrollbar(adjustment=v)
-        self.sb.show()
-        self.data_box.pack_start(self.sb, expand=False)
-        #self.data_view.set_vadjustment(v)
+        self.data_box.set_vadjustment(v)
+        self.data_box.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
 
         self.cow_count_column = gtk.TreeViewColumn('#')
         self.data_view.append_column(self.cow_count_column)
