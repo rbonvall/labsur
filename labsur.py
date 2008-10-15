@@ -34,7 +34,7 @@ class Application:
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.window.set_title('LabSur')
         self.window.connect('delete_event', self.quit)
-        self.window.set_default_size(200, 400)
+        self.window.set_default_size(200, 500)
 
         self.vbox = gtk.VBox()
         self.vbox.show()
