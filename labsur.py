@@ -7,6 +7,7 @@ except ImportError:
     from namedtuple import namedtuple
 from string import Template
 from datetime import datetime
+from operator import attrgetter
 import pygtk
 pygtk.require20()
 import gtk
@@ -144,9 +145,11 @@ class Application:
         file_name = self.choose_data_source()
         self.data = []
         cow_file = open(file_name)
-        for i, cow in enumerate(parse_cow_file(cow_file)):
-            self.list_store.append((i + 1,) + cow)
+        for cow in parse_cow_file(cow_file):
             self.data.append(cow)
+        self.data.sort(key=attrgetter('cells'), reverse=True)
+        for i, cow in enumerate(self.data):
+            self.list_store.append((i + 1,) + cow)
         self.data_view.set_model(self.list_store)
 
     def export(self, *args):
