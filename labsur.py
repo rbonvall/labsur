@@ -21,12 +21,15 @@ class CowStatsParseError(Exception):
 
 def parse_cow_file(f):
     cows = list()
-    for line in f:
+    for n, line in enumerate(f):
+        if not line.strip():
+            continue
         try:
            row = CowStats(*map(int, line.strip().split(',')))
         except:
-            raise CowStatsParseError('Archivo invalido')
-        cows.append(row)
+           print 'Registro invalido en linea %d del archivo: "%s"' % (n+1, repr(line))
+        else:
+            cows.append(row)
     return cows
 
 
