@@ -8,6 +8,7 @@ except ImportError:
 from string import Template
 from datetime import datetime
 from operator import attrgetter
+import re
 import pygtk
 pygtk.require20()
 import gtk
@@ -32,6 +33,14 @@ def parse_cow_file(f):
             cows.append(row)
     return cows
 
+def parse_date(s):
+    try:
+        date = re.split('[^\d]+', s.strip())
+        day, month, year = [int(part[-2:]) for part in date]
+    except:
+        day, month, year = 0, 0, 0
+    return '%02d/%02d/%02d' % (day, month, year)
+    
 
 class Application:
     def __init__(self):
@@ -161,6 +170,8 @@ class Application:
             return
         file_name = self.choose_export_name()
         data_file = open(file_name, 'w')
+        date = parse_date(self.fields['FECHARECEPCION'].get_text())
+        data_file.write(date.ljust(22) + '\n') # registro con la fecha
         for cow in self.data:
             reg = "%08d%04d%04d%04d%02d%s" % (cow.nr_cow, cow.mat, cow.cells, cow.prot, 0, "\n")
             data_file.write(reg)
