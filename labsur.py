@@ -16,6 +16,7 @@ import gtk
 CowStats = namedtuple('CowStats', ['nr_cow', 'mat', 'prot', 'nn', 'cells'])
 
 TEMPLATE_FILE = r'template'
+__version__ = 'v6'
 
 class CowStatsParseError(Exception):
     pass
@@ -45,7 +46,7 @@ def parse_date(s):
 class Application:
     def __init__(self):
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-        self.window.set_title('LabSur')
+        self.window.set_title('LabSur - %s' % __version__)
         self.window.connect('delete_event', self.quit)
         self.window.set_default_size(200, 500)
 
