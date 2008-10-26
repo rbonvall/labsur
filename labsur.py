@@ -162,9 +162,9 @@ class Application:
         file_name = self.choose_export_name()
         data_file = open(file_name, 'w')
         for cow in self.data:
-            reg = "%-8s%-4s%-4s%-4s%1s%3s" % (cow.nr_cow, cow.mat, cow.cells, cow.prot, chr(10), 3 * "\n")
+            reg = "%08d%04d%04d%04d%02d%s" % (cow.nr_cow, cow.mat, cow.cells, cow.prot, 0, "\n")
             data_file.write(reg)
-        data_file.write('9' * len(reg)) # registro con nueves para marcar final
+        data_file.write(22 * '9' + '\x1a') # registro con nueves para marcar final
         data_file.close()
 
     def printable(self, *args):
