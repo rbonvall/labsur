@@ -69,24 +69,25 @@ class Application:
         self.quit_button.show()
 
         self.form = gtk.Table(8, 4, False)
+        s = self.add_form_item
         self.fields = {
-          'NUMEROSOLICITUD':self.add_form_item('Nro. solicitud', 0, 0),
+          'NUMEROSOLICITUD':s('Nro. solicitud', 0, 0),
 
-          'PROPIETARIO':    self.add_form_item('Propietario',    1, 0),
-          'RUT':            self.add_form_item('Rut',            2, 0),
-          'DIRECCION':      self.add_form_item('Direccion',      3, 0),
-          'COMUNA':         self.add_form_item('Comuna',         4, 0),
-          'SOLICITANTE':    self.add_form_item('Solicitante',    5, 0),
-          'NUMEROEXAMEN':   self.add_form_item('Nro. examen',    6, 0),
-          'FECHARECEPCION': self.add_form_item('Fecha recepcion',   0, 1),
-          'FECHAINFORME':   self.add_form_item('Fecha informe',     1, 1),
-          'CANTMUESTRAS':   self.add_form_item('Cantidad muestras', 2, 1),
-          'TECNICA':        self.add_form_item('Tecnica',           3, 1),
-          'REACTIVO':       self.add_form_item('Reactivo',          4, 1),
-          'CODIGOEXAMEN':   self.add_form_item('Codigo examen',     5, 1),
+          'PROPIETARIO':    s('Propietario',    1, 0),
+          'RUT':            s('Rut',            2, 0),
+          'DIRECCION':      s('Direccion',      3, 0),
+          'COMUNA':         s('Comuna',         4, 0),
+          'SOLICITANTE':    s('Solicitante',    5, 0),
+          'NUMEROEXAMEN':   s('Nro. examen',    6, 0),
+          'FECHARECEPCION': s('Fecha recepcion',   0, 1),
+          'FECHAINFORME':   s('Fecha informe',     1, 1),
+          'CANTMUESTRAS':   s('Cantidad muestras', 2, 1),
+          'TECNICA':        s('Tecnica',           3, 1),
+          'REACTIVO':       s('Reactivo',          4, 1),
+          'CODIGOEXAMEN':   s('Codigo examen',     5, 1),
 
-          'NOMBRE':       self.add_form_item('Firma', 6, 1),
-          'CARGO':        self.add_form_item('Cargo', 7, 1),
+          'NOMBRE':         s('Firma', 6, 1),
+          'CARGO':          s('Cargo', 7, 1),
         }
         tab_order = ['NUMEROSOLICITUD',
             'PROPIETARIO', 'RUT', 'DIRECCION', 'COMUNA',
