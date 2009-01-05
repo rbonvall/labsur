@@ -178,11 +178,14 @@ logo_address = Paragraph(u'García Hurtado 930<br />'
                          u'Fono: (64) 643043<br />'
                          u'Osorno', style_address)
 title = Paragraph(u'Células somáticas', style_title)
+serial = Paragraph(u'<b>Nro. solicitud:</b> 2234', style_serial)
     
 story = [
     FrameBreak('logo'),
     logo_labsur,
     logo_address,
+    FrameBreak('serial'),
+    serial,
     FrameBreak('left'),
     form_table_1,
     FrameBreak('right'),
