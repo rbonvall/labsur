@@ -11,7 +11,7 @@ from reportlab.platypus import (
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.rl_config import defaultPageSize
 from reportlab.lib.units import inch, cm
-from reportlab.lib import colors, pagesizes
+from reportlab.lib import colors, pagesizes, styles
 from time import localtime
 from random import randrange
 from operator import itemgetter
@@ -27,14 +27,24 @@ def thousand_separated(number, separator='.'):
     parts[1:] = [x.zfill(3) for x in parts[1:]]
     return separator.join(parts)
 
-styles = getSampleStyleSheet()
+ss = getSampleStyleSheet()
+
 style_normal = ParagraphStyle('normal', fontName='Helvetica')
+style_serial = ParagraphStyle('serial', parent=style_normal)
+style_serial.alignment = 2
 #style_normal = styles['Normal']
 #style_normal.fontName = 'Helvetica'
-style_title = ParagraphStyle('title', fontName='Helvetica-Bold')
-style_labsur = styles['h1']
+
+style_title = ParagraphStyle('title')
+style_title.fontName = 'Helvetica-Bold'
+style_title.alignment = styles.TA_CENTER
+
+style_labsur = ParagraphStyle('logo', parent=ss['h1'])
 style_labsur.backColor = colors.silver
-style_labsur.alignment = 1
+style_labsur.alignment = styles.TA_CENTER
+
+style_address = ParagraphStyle('address', parent=style_normal)
+#style_address.leftIndent = -0.5*cm
 
 W, H = pagesizes.letter
 
@@ -150,7 +160,7 @@ somatic_table = Table(header + rows, repeatRows=1,
 logo_labsur = Paragraph(u'LABSUR', style_labsur)
 logo_address = Paragraph(u'García Hurtado 930<br />'
                          u'Fono: (64) 643043<br />'
-                         u'Osorno', style_normal)
+                         u'Osorno', style_address)
 title = Paragraph(u'Células somáticas', style_title)
     
 story = [
