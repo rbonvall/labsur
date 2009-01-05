@@ -112,7 +112,8 @@ styles = getSampleStyleSheet()
 styleNormal = styles['Normal']
 styleHeading = styles['Heading1']
 
-data = [(randrange(5000, 15000), randrange(5000, 15000)) for i in range(160)]
+data = [(randrange(5000, 15000), randrange(5000, 15000))
+        for i in range(500)]
 data.sort(key=itemgetter(1), reverse=True)
 
 header = [(None, u'Número\nde vaca', u'RCS\n\u00d71000')]
