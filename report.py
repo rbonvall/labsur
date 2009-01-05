@@ -6,7 +6,7 @@ from reportlab.platypus import (
     Frame, SimpleDocTemplate, BaseDocTemplate,
     Table, LongTable, TableStyle,
     PageTemplate, Spacer, Paragraph,
-    FrameBreak,
+    FrameBreak, NextPageTemplate,
 )
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.rl_config import defaultPageSize
@@ -53,33 +53,46 @@ class Report(BaseDocTemplate):
     #_nextPageTemplateCycle = chain([0], repeat(1))
     def __init__(self, *args, **kwargs):
         x = 2*cm
-        w_form1, w_form2 = W/2, W/2 - 4*cm
-        h_form = 2.7*cm
+        w_form1, h_form1 = W/2, 2.7*cm
+        w_form2, h_form2 = W/2 - 4*cm, h_form1
+        y_form           = H - 5*cm
         w_table, h_table = (W - 3.9*cm)/5, 17.5*cm
-        y_logo = H - 2*cm
-        y_form = H - 5*cm
-        y_table = H - h_table - 6*cm
-        w_title, h_title = 5 * w_table, 1*cm
+        y_table          = H - h_table - 6*cm
+        w_logo, h_logo   = 3.4*cm, 2.5*cm
+        y_logo           = H - 2*cm
+        w_title, h_title = 5 * w_table, 0.6*cm
+        w_serial, h_serial = 5*cm, h_title
+        x_serial, y_serial = W - w_serial - 2*cm, H - h_serial
         y_title = y_table + h_table 
+        x_signature, y_signature = 2*cm, 2*cm
+        w_signature, h_signature = 5*cm, 2*cm
         pad = dict(('%sPadding' % d, 0) for d in ['left', 'right', 'top', 'bottom'])
-        t1 = PageTemplate(frames=[
-            Frame(x, y_logo, 3.4*cm, 2.5*cm, id='logo', **pad),
-            Frame(x,           y_form, w_form1, h_form, id='left',  **pad),
-            Frame(x + w_form1, y_form, w_form2, h_form, id='right', **pad),
+        t1 = PageTemplate(id='p1', frames=[
+            Frame(x, y_logo, w_logo, h_logo, id='logo', **pad),
+            Frame(x_serial, y_serial, w_serial, h_title, id='serial', **pad),
+            Frame(x,           y_form, w_form1, h_form1, id='left',  **pad),
+            Frame(x + w_form1, y_form, w_form2, h_form2, id='right', **pad),
             Frame(x, y_title, w_title, h_title, id='title', **pad),
             Frame(x,             y_table, w_table, h_table, id='panel1', **pad),
             Frame(x + 1*w_table, y_table, w_table, h_table, id='panel2', **pad),
             Frame(x + 2*w_table, y_table, w_table, h_table, id='panel3', **pad),
             Frame(x + 3*w_table, y_table, w_table, h_table, id='panel4', **pad),
             Frame(x + 4*w_table, y_table, w_table, h_table, id='panel5', **pad),
-        ])
-        t2 = PageTemplate(frames=[
-            Frame( 2*cm, 8*cm, 5*cm, H-2*cm, showBoundary=True, id='panel3'),
-            Frame( 2*cm, 8*cm, 5*cm, H-2*cm, showBoundary=True, id='panel4'),
-        ])
-        kwargs['showBoundary'] = True
+            #Frame(x_signature, y_signature, w_signature, h_signature, id='signature', **pad),
+        ], onPage=self.printPageNumber)
+        h_table += 4*cm
+        #y_table = H - 2*cm
+        t2 = PageTemplate(id='p2', frames=[
+            Frame(x,             y_table, w_table, h_table, id='panel1', **pad),
+            Frame(x + 1*w_table, y_table, w_table, h_table, id='panel2', **pad),
+            Frame(x + 2*w_table, y_table, w_table, h_table, id='panel3', **pad),
+            Frame(x + 3*w_table, y_table, w_table, h_table, id='panel4', **pad),
+            Frame(x + 4*w_table, y_table, w_table, h_table, id='panel5', **pad),
+            #Frame(x_signature, y_signature, w_signature, h_signature, id='signature', **pad),
+        ], onPage=self.printPageNumber)
+        #kwargs['showBoundary'] = True
         BaseDocTemplate.__init__(self, *args, **kwargs)
-        self.addPageTemplates([t1])
+        self.addPageTemplates([t1, t2])
     #def handle_pageBegin(self):
     #    BaseDocTemplate.handle_pageBegin(self)
 
@@ -174,6 +187,7 @@ story = [
     FrameBreak('title'),
     title,
     FrameBreak('panel1'),
+    NextPageTemplate('p2'),
     somatic_table,
 ]
 
