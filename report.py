@@ -97,7 +97,10 @@ class Report(BaseDocTemplate):
     #    BaseDocTemplate.handle_pageBegin(self)
 
     def printPageNumber(self, canvas, document):
-        pass
+        canvas.saveState()
+        page_str = u'Página %d' % (document.page)
+        canvas.drawRightString(W - 2*cm, 2*cm, page_str)
+        canvas.restoreState()
 
 date = localtime()[:3]
 #document = SimpleDocTemplate('%04d-%02d-%02d-labsur.pdf' % date,
