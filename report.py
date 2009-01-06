@@ -79,8 +79,8 @@ class Report(BaseDocTemplate):
             Frame(x + 3*w_table, y_table, w_table, h_table, id='panel4', **pad),
             Frame(x + 4*w_table, y_table, w_table, h_table, id='panel5', **pad),
             #Frame(x_signature, y_signature, w_signature, h_signature, id='signature', **pad),
-        ], onPage=self.printPageNumber)
-        h_table += 4*cm
+        ], onPage=self.printFooter)
+        h_table = H - 4*cm
         #y_table = H - 2*cm
         t2 = PageTemplate(id='p2', frames=[
             Frame(x,             y_table, w_table, h_table, id='panel1', **pad),
@@ -89,17 +89,27 @@ class Report(BaseDocTemplate):
             Frame(x + 3*w_table, y_table, w_table, h_table, id='panel4', **pad),
             Frame(x + 4*w_table, y_table, w_table, h_table, id='panel5', **pad),
             #Frame(x_signature, y_signature, w_signature, h_signature, id='signature', **pad),
-        ], onPage=self.printPageNumber)
+        ], onPage=self.printFooter)
         #kwargs['showBoundary'] = True
         BaseDocTemplate.__init__(self, *args, **kwargs)
         self.addPageTemplates([t1, t2])
     #def handle_pageBegin(self):
     #    BaseDocTemplate.handle_pageBegin(self)
 
-    def printPageNumber(self, canvas, document):
+    def printFooter(self, canvas, document):
         canvas.saveState()
+        # page number
         page_str = u'Página %d' % (document.page)
-        canvas.drawRightString(W - 2*cm, 2*cm, page_str)
+        canvas.drawRightString(W - 2*cm, 1.5*cm, page_str)
+        # signature
+        name = u'Perico los Palotes'
+        job  = u'Emprendedor'
+        x, y = W/2 - 4*cm, 2.5*cm
+        w = 6*cm
+        canvas.drawCentredString(x, 2*cm, name)
+        canvas.drawCentredString(x, 1.5*cm, job)
+        canvas.line(x - w/2, y, x+w/2, y)
+
         canvas.restoreState()
 
 date = localtime()[:3]
