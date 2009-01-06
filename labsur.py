@@ -38,7 +38,7 @@ def parse_cow_file(f):
 class Application:
     def __init__(self):
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-        self.window.set_title('LabSur')
+        self.window.set_title('LabSur - v7')
         self.window.connect('delete_event', self.quit)
         self.window.set_default_size(200, 500)
 
