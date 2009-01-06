@@ -7,7 +7,9 @@ except ImportError:
     from namedtuple import namedtuple
 from string import Template
 from datetime import datetime
+from time import localtime
 from operator import attrgetter
+from report import create_report
 import pygtk
 pygtk.require20()
 import gtk
@@ -172,28 +174,25 @@ class Application:
         if not self.data:
             print "No hay datos para imprimir"
             return
-        report_template = Template(open(TEMPLATE_FILE).read())
         file_name = self.choose_report_name()
-        report_file = open(file_name, 'w')
+        report_data = dict((k, unicode(v.get_text())) for k, v in self.fields.items())
+        create_report(report_data, self.data, file_name)
 
-        report_data = {}
-        for k, v in self.fields.items():
-            report_data[k] = v.get_text()
-        report_data['TABLA'] = self.data_to_html()
-
-        report_file.write(report_template.substitute(report_data))
-        report_file.close()
-
-    
     def choose_data_source(self):
         return self.choose_file('Abrir archivo de datos',
                                 gtk.FILE_CHOOSER_ACTION_OPEN,
                                 extension='lab')
     def choose_report_name(self):
+        date = "%04d-%02d-%02d" % localtime()[:3]
+        nr = self.fields['NUMEROSOLICITUD'].get_text()
+        client = self.fields['PROPIETARIO'].get_text()
+        name_parts = [str(x).strip().lower().replace(' ', '-')
+                      for x in (date, nr, client)]
+        name = '-'.join(x for x in name_parts if x)
         return self.choose_file('Guardar informe como',
                                 gtk.FILE_CHOOSER_ACTION_SAVE,
-                                current_name='informe.html',
-                                extension='html',
+                                current_name='%s.pdf' % name,
+                                extension='pdf',
                                 directory='Informes')
     def choose_export_name(self):
         return self.choose_file('Exportar datos como',
